@@ -48,6 +48,9 @@ class ThumbnailGeneratorFlame(ThumbnailGenerator):
             generation job need to wait in order to be started. Can be None if
             the media is created in foreground.
         """
+        ## PATCHES CDLs using IPC Framework.
+        arc_utils = self.engine.frameworks["tk-framework-arc-utils"].import_module("arc_utils")
+        ipc_colour = arc_utils.flame_ipc_colour_management
 
         preview_job = self._preview_jobs.get(path, None)
         if preview_job is None:
@@ -59,7 +62,7 @@ class ThumbnailGeneratorFlame(ThumbnailGenerator):
                 extension=".mov",
                 display_name=display_name,
                 job_context="Create Flow Production Tracking Preview",
-                preset_path=self.engine.previews_preset_path,
+                preset_path=ipc_colour.create_proxy_template(self.engine.previews_preset_path, asset_info, self.engine),
                 asset_info=asset_info,
                 dependencies=dependencies,
                 poster_frame=None,
@@ -98,6 +101,9 @@ class ThumbnailGeneratorFlame(ThumbnailGenerator):
             generation job need to wait in order to be started. Can be None if
             the media is created in foreground.
         """
+        ## PATCHES CDLs using IPC Framework.
+        arc_utils = self.engine.frameworks["tk-framework-arc-utils"].import_module("arc_utils")
+        ipc_colour = arc_utils.flame_ipc_colour_management
         thumbnail_job = self._thumbnail_jobs.get(path, None)
         if thumbnail_job is None:
             self.engine.log_debug("Create and Upload Thumbnail using Flame exporter")
@@ -111,7 +117,7 @@ class ThumbnailGeneratorFlame(ThumbnailGenerator):
                 extension=".jpg",
                 display_name=display_name,
                 job_context="Create Flow Production Tracking Thumbnail",
-                preset_path=self.engine.thumbnails_preset_path,
+                preset_path=ipc_colour.create_proxy_template(self.engine.thumbnails_preset_path, asset_info, self.engine),
                 asset_info=asset_info,
                 dependencies=dependencies,
                 poster_frame=poster_frame,
