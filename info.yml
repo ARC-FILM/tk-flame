@@ -218,3 +218,5 @@ description: "Flow Production Tracking Integration in Flame"
 requires_shotgun_version:
 requires_core_version: "v0.18.45"
 minimum_python_version: "3.9"
+frameworks:
+    - {"name": "tk-framework-arc-utils", "version": "v1.x.x"}
