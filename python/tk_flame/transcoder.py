@@ -40,7 +40,11 @@ class Transcoder(object):
         :returns clip: Flame's Python API clip object or none.
         """
         import flame
-
+        #Overrides Flame's MediaHub GUI settings for "sequence mode"
+        #ie Sequence or Frames - which was causing single frame transcodes
+        mediahub_options = flame.mediahub.files.options
+        original_sequence_mode = mediahub_options.sequence_mode
+        mediahub_options.sequence_mode = True
         clips = flame.import_clips(path)
         self.engine.log_debug("Imported '%s' -> [%s]" % (path, clips))
         if not clips:
@@ -50,6 +54,7 @@ class Transcoder(object):
             self.engine.log_warning(
                 "%s points to more than one clip." " First one will be used." % path
             )
+        mediahub_options.sequence_mode = original_sequence_mode
         return clips[0]
 
     @staticmethod
