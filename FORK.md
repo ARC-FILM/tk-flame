@@ -122,6 +122,9 @@ Spans two repos; do this **first**, because patch #2 imports from it.
 
 ### Known bugs to fix while you own this (don't carry them silently)
 
+Char note on below: I'm going to ignore this for now as I plan to rebuild the system with new
+architecture/systems, so it's not worth spending time reworking this.
+
 The author's own comment (`# This fucking sucks and I want to rebuild this`) is a fair
 warning. These bite inside preview/thumbnail generation — i.e. the exact silent-failure
 surface. Decide on each before the first framework tag:
@@ -250,14 +253,7 @@ Resolved by reading `arc_xml_patcher.py`:
 - ~~hardcoded `/Volumes/...` in the patcher~~ — none; dirs derived from `exportPath`.
 - ~~`create_proxy_template` signature~~ — confirmed `(preset_path, asset_info, engine)`.
 
-Still open:
-- [ ] Fix the dead LUT-fallback branch + `None`-deref crash (see *Known bugs*) — or
-      accept that projects with no IPC LUT will fail export until it's fixed.
-- [ ] `local_path_mac`: are any Flame hosts Linux? If so, switch to `local_path`.
-- [ ] Drop the unused `sg = self.engine.shotgun` line in patch #2, or finish the
-      LUT-from-IPC lookup it was gesturing at.
-- [ ] Is `StartFrame` a real wiretap key? Verify or drop from the hook override (#4).
-- [ ] Does the framework need its own tests dir for the salvaged `__main__` harness?
+- How to refactor colour management? Beyond scope of these commits
 
 ---
 
