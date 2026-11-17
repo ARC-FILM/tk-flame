@@ -291,6 +291,7 @@ class Transcoder(object):
             temp_files.append(actual_dst_path)
         else:
             actual_dst_path = dst_path
+            clip.name = os.path.splitext(os.path.basename(dst_path))[0]
 
         exporter = flame.PyExporter()
         exporter.foreground_export = False
@@ -334,7 +335,7 @@ class Transcoder(object):
         exporter.export(
             sources=clip,
             preset_path=preset_path,
-            output_directory=self.engine.get_backburner_tmp(),
+            output_directory=os.path.dirname(actual_dst_path),
             background_job_settings=background_job_settings,
             hooks=self._build_python_hook_override(transcoder_job_key),
             hooks_user_data=hooks_user_data,
