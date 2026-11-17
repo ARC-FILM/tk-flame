@@ -1388,10 +1388,10 @@ class FlameEngine(sgtk.platform.Engine):
         tk_flame = self.import_module("tk_flame")
 
         if self._flame_exporter_supported:
-            self._thumbnail_generator = tk_flame.LocalMovieGeneratorFlame(engine=self)
+            self._local_movie_generator = tk_flame.LocalMovieGeneratorFlame(engine=self)
         else:
-            self._thumbnail_generator = tk_flame.LocalMovieGeneratorFFmpeg(engine=self)
-        return self._thumbnail_generator
+            self._local_movie_generator = tk_flame.LocalMovieGeneratorFFmpeg(engine=self)
+        return self._local_movie_generator
 
     @property
     def cmdjob_supports_plugin_name(self):
