@@ -54,13 +54,17 @@ class LocalMovieGeneratorFlame(LocalMovieGenerator):
             generation job need to wait in order to be started. Can be None if
             the media is created in foreground.
         """
+        ## PATCHES CDLs using IPC Framework.
+        arc_utils = self.engine.frameworks["tk-framework-arc-utils"].import_module("arc_utils")
+        ipc_colour = arc_utils.flame_ipc_colour_management
+
         return self.engine.transcoder.transcode(
             src_path=src_path,
             dst_path=dst_path,
             extension=os.path.splitext(dst_path)[-1],
             display_name=display_name,
             job_context="Create Flow Production Tracking Local Movie",
-            preset_path=self.engine.local_movies_preset_path,
+            preset_path=ipc_colour.create_proxy_template(self.engine.local_movies_preset_path, asset_info, self.engine),
             asset_info=asset_info,
             dependencies=dependencies,
             poster_frame=None,
